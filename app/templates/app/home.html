@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %} RESUME {% endblock %}
+{% block body %}
+
+
+
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+
+
+
+
+<div class="container">
+  <h1 class="alrt-danger text-center py-5 ">RESUME UPLOADER</h1>
+  <div class="row">
+    <div class="col-sm-8">
+      <form action="" method="POST" enctype="multipart/form-data" class="shadow p-4">
+        {% csrf_token %}
+        {% for fm in form %}
+        <div class="form-group mb-3">
+          {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+        </div>
+        {% endfor %}
+        <input type="submit" value="submit" class="btn btn-primary">
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="alert alert-danger my-3">{{errors}}</p>
+        {% endfor %}
+        {% endif %}
+
+      </form>
+    </div>
+
+    <div class="col-sm-4">
+      <h4 class="text-center m-3"><u>ALL CANDIDATES RESUME !!</u></h4>
+      {% for candidate in candidates %}
+      {{candidate.id}} <a href="{% url 'candidate' candidate.id %}">{{candidate.name}}</a> <br>
+
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+  $(function () {
+    $("#datepicker").datepicker();
+  });
+</script>
+{% endblock %}
